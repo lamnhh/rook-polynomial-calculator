@@ -1,0 +1,41 @@
+html,
+body {
+  font-size: 62.5%;
+  margin: 0;
+  padding: 0;
+}
+
+.chessboard {
+  border-top: 0.1rem solid black;
+  border-left: 0.1rem solid black;
+  border-bottom: 0.2rem solid black;
+  border-right: 0.2rem solid black;
+  margin-top: 3rem;
+  width: 40rem;
+}
+
+.chessboard-cell[style^="--aspect-ratio"]::before {
+  content: "";
+  display: inline-block;
+  height: 0;
+  padding-bottom: calc(100% / (var(--aspect-ratio)));
+  width: 1px;
+}
+
+.chessboard-cell {
+  align-items: center;
+  border-left: 0.1rem solid black;
+  border-top: 0.1rem solid black;
+  display: flex;
+  font-size: 1.6rem;
+  justify-content: center;
+}
+
+.chessboard-cell i {
+  display: none;
+  font-size: 3.2rem;
+}
+
+.chessboard-cell.disabled i {
+  display: block;
+}
