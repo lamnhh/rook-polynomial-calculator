@@ -1,17 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-
-const range = (l, r) => {
-  const ans = [];
-  for (let i = l; i < r; ++i) {
-    ans.push(i);
-  }
-  return ans;
-};
+import compute from "./calculator";
 
 const App = () => {
   const [rowCount, setRowCount] = useState(4);
   const [colCount, setColCount] = useState(4);
   const [maskList, setMaskList] = useState(Array.from(Array(rowCount * colCount), () => 1));
+  const [polynomial, setPolynomial] = useState([]);
 
   const updateChessboardSize = useCallback((e) => {
     e.preventDefault();
@@ -24,6 +18,14 @@ const App = () => {
   useEffect(() => {
     setMaskList(Array.from(Array(rowCount * colCount), () => 1));
   }, [rowCount, colCount]);
+
+  useEffect(() => {
+    const mask = [];
+    for (let i = 0; i < rowCount; ++i) {
+      mask.push(maskList.slice(i * colCount, (i + 1) * colCount));
+    }
+    setPolynomial(compute(mask));
+  }, [maskList, rowCount, colCount]);
 
   return (
     <React.Fragment>
@@ -39,8 +41,8 @@ const App = () => {
           gridTemplateColumns: `repeat(${colCount}, 1fr)`
         }}>
         {maskList.map((mask, idx) => {
-          const row = Math.floor(idx / colCount);
-          const col = idx % colCount;
+          // const row = Math.floor(idx / colCount);
+          // const col = idx % colCount;
           return (
             <div
               className={"chessboard-cell" + (mask === 0 ? " disabled" : "")}
@@ -53,6 +55,21 @@ const App = () => {
               }}>
               <i className="fas fa-times"></i>
             </div>
+          );
+        })}
+      </div>
+      <div className="polynomial">
+        {polynomial.map((a, idx) => {
+          if (idx === 0) {
+            return <span>{a}</span>;
+          }
+          if (idx === 1) {
+            return <span>+ {a} x</span>;
+          }
+          return (
+            <span>
+              + {a} x<sup>{idx}</sup>
+            </span>
           );
         })}
       </div>

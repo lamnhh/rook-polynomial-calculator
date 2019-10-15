@@ -39,3 +39,7 @@ body {
 .chessboard-cell.disabled i {
   display: block;
 }
+
+.polynomial {
+  font-size: 1.6rem;
+}
