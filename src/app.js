@@ -89,9 +89,9 @@ const App = () => {
                       return a;
                     }
                     if (idx === 1) {
-                      return (a > 1 ? a : "") + "x";
+                      return (a !== 1 ? a : "") + "x";
                     }
-                    return (a > 1 ? a : "") + "x^" + idx;
+                    return (a !== 1 ? a : "") + "x^" + idx;
                   })
                   .join(" + ")}
             </MathJax.Node>
