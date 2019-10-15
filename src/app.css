@@ -5,13 +5,21 @@ body {
   padding: 0;
 }
 
+.chessboard-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
 .chessboard {
   border-top: 0.1rem solid black;
   border-left: 0.1rem solid black;
   border-bottom: 0.2rem solid black;
   border-right: 0.2rem solid black;
   margin-top: 3rem;
-  width: 40rem;
+  width: 50rem;
 }
 
 .chessboard-cell[style^="--aspect-ratio"]::before {
@@ -31,15 +39,60 @@ body {
   justify-content: center;
 }
 
-.chessboard-cell i {
+.chessboard-cell img {
   display: none;
-  font-size: 3.2rem;
+  height: 40%;
+  width: 40%;
 }
 
-.chessboard-cell.disabled i {
+.chessboard-cell.disabled img {
   display: block;
 }
 
 .polynomial {
-  font-size: 1.6rem;
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-top: 1.6rem;
+}
+
+.chessboard-size-form div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.chessboard-size-form img {
+  width: 1.6rem;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+
+.chessboard-size-form input[type="number"] {
+  font-size: 2.4rem;
+  text-align: center;
+  width: 4rem;
+}
+
+.size-selector {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  font-size: 2.4rem;
+  padding: 0.4rem;
+  width: 5.6rem;
+}
+
+.page-title {
+  font-size: 4rem;
+  margin: 4rem 0 2rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .chessboard {
+    width: calc(100vw - 5rem);
+  }
+  .polynomial {
+    font-size: 1.6rem;
+  }
 }

@@ -1,19 +1,34 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import MathJax from "react-mathjax2";
+
 import compute from "./calculator";
+import SizeSelector from "./size-selector";
+
+const SIZE_LIMIT = 7;
 
 const App = () => {
   const [rowCount, setRowCount] = useState(4);
-  const [colCount, setColCount] = useState(4);
+  const [colCount, setColCount] = useState(5);
   const [maskList, setMaskList] = useState(Array.from(Array(rowCount * colCount), () => 1));
   const [polynomial, setPolynomial] = useState([]);
 
-  const updateChessboardSize = useCallback((e) => {
-    e.preventDefault();
-    const rowCount = parseInt(e.target.rowCount.value);
-    const colCount = parseInt(e.target.colCount.value);
-    setRowCount(rowCount);
-    setColCount(colCount);
-  }, []);
+  useEffect(() => {
+    if (rowCount > SIZE_LIMIT) {
+      setRowCount(SIZE_LIMIT);
+    }
+    if (rowCount < 1) {
+      setRowCount(1);
+    }
+  }, [rowCount]);
+
+  useEffect(() => {
+    if (colCount > SIZE_LIMIT) {
+      setColCount(SIZE_LIMIT);
+    }
+    if (colCount < 1) {
+      setColCount(1);
+    }
+  }, [colCount]);
 
   useEffect(() => {
     setMaskList(Array.from(Array(rowCount * colCount), () => 1));
@@ -29,49 +44,59 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <form onSubmit={updateChessboardSize}>
-        <input type="text" name="rowCount" defaultValue={rowCount} />
-        <input type="text" name="colCount" defaultValue={colCount} />
-        <button type="submit">Set Size</button>
-      </form>
-      <div
-        className="chessboard"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${colCount}, 1fr)`
-        }}>
-        {maskList.map((mask, idx) => {
-          // const row = Math.floor(idx / colCount);
-          // const col = idx % colCount;
-          return (
-            <div
-              className={"chessboard-cell" + (mask === 0 ? " disabled" : "")}
-              key={idx}
-              style={{ "--aspect-ratio": "1/1" }}
-              onClick={() => {
-                const newMaskList = [...maskList];
-                newMaskList[idx] = maskList[idx] ^ 1;
-                setMaskList(newMaskList);
-              }}>
-              <i className="fas fa-times"></i>
-            </div>
-          );
-        })}
-      </div>
-      <div className="polynomial">
-        {polynomial.map((a, idx) => {
-          if (idx === 0) {
-            return <span>{a}</span>;
-          }
-          if (idx === 1) {
-            return <span>+ {a} x</span>;
-          }
-          return (
-            <span>
-              + {a} x<sup>{idx}</sup>
-            </span>
-          );
-        })}
+      <h1 className="page-title">Rook Polynomial Calculator</h1>
+      <div className="chessboard-container">
+        <div className="chessboard-size-form">
+          <SizeSelector
+            upperLimit={SIZE_LIMIT}
+            value={rowCount}
+            onSelect={setRowCount}></SizeSelector>
+          <img src="/times.svg" alt="" />
+          <SizeSelector
+            upperLimit={SIZE_LIMIT}
+            value={colCount}
+            onSelect={setColCount}></SizeSelector>
+        </div>
+        <div
+          className="chessboard"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${colCount}, 1fr)`
+          }}>
+          {maskList.map((mask, idx) => {
+            return (
+              <div
+                className={"chessboard-cell" + (mask === 0 ? " disabled" : "")}
+                key={idx}
+                style={{ "--aspect-ratio": "1/1" }}
+                onClick={() => {
+                  const newMaskList = [...maskList];
+                  newMaskList[idx] = maskList[idx] ^ 1;
+                  setMaskList(newMaskList);
+                }}>
+                <img src="/times.svg" alt="Disabled cell" />
+              </div>
+            );
+          })}
+        </div>
+        <MathJax.Context input="ascii">
+          <div className="polynomial">
+            <MathJax.Node>
+              {"R(x) = " +
+                polynomial
+                  .map((a, idx) => {
+                    if (idx === 0) {
+                      return a;
+                    }
+                    if (idx === 1) {
+                      return (a > 1 ? a : "") + "x";
+                    }
+                    return (a > 1 ? a : "") + "x^" + idx;
+                  })
+                  .join(" + ")}
+            </MathJax.Node>
+          </div>
+        </MathJax.Context>
       </div>
     </React.Fragment>
   );
