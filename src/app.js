@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import MathJax from "react-mathjax2";
 
 import compute from "./calculator";
 import SizeSelector from "./size-selector";
+import { tsEnumDeclaration } from "@babel/types";
 
 const SIZE_LIMIT = 7;
 
@@ -42,6 +43,10 @@ const App = () => {
     setPolynomial(compute(mask));
   }, [maskList, rowCount, colCount]);
 
+  const flip = useCallback(() => {
+    setMaskList((maskList) => maskList.map((x) => 1 - x));
+  }, []);
+
   return (
     <React.Fragment>
       <h1 className="page-title">Rook Polynomial Calculator</h1>
@@ -79,6 +84,7 @@ const App = () => {
             );
           })}
         </div>
+        <button onClick={flip}>Flip</button>
         <MathJax.Context input="ascii">
           <div className="polynomial">
             <MathJax.Node>
