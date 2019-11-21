@@ -3,7 +3,6 @@ import MathJax from "react-mathjax2";
 
 import compute from "./calculator";
 import SizeSelector from "./size-selector";
-import { tsEnumDeclaration } from "@babel/types";
 
 const SIZE_LIMIT = 7;
 
