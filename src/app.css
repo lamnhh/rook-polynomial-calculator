@@ -50,9 +50,14 @@ body {
 }
 
 .polynomial {
+  align-items: center;
+  display: flex;
   font-size: 2.4rem;
   font-weight: bold;
+  justify-content: center;
   margin-top: 1.6rem;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .chessboard-size-form div {
@@ -86,6 +91,30 @@ body {
   font-size: 4rem;
   margin: 4rem 0 2rem;
   text-align: center;
+}
+
+.action-section {
+  margin-top: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.action-section button {
+  background: transparent;
+  border: 0.1rem solid #000;
+  border-radius: 0.6rem;
+  font-size: 1.6rem;
+  padding: 0.8rem 1.6rem;
+  width: 8rem;
+}
+
+.action-section button:hover,
+.action-section button:focus {
+  box-shadow: 0px 0px 3px #003466;
+  outline: none;
+}
+
+.action-section button + button {
+  margin-left: 0.8rem;
 }
 
 @media screen and (max-width: 767px) {

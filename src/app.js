@@ -46,6 +46,10 @@ const App = () => {
     setMaskList((maskList) => maskList.map((x) => 1 - x));
   }, []);
 
+  const clear = useCallback(() => {
+    setMaskList((maskList) => maskList.map((x) => 1));
+  }, []);
+
   return (
     <React.Fragment>
       <h1 className="page-title">Rook Polynomial Calculator</h1>
@@ -83,7 +87,10 @@ const App = () => {
             );
           })}
         </div>
-        <button onClick={flip}>Flip</button>
+        <div className="action-section">
+          <button onClick={clear}>Clear</button>
+          <button onClick={flip}>Flip</button>
+        </div>
         <MathJax.Context input="ascii">
           <div className="polynomial">
             <MathJax.Node>
