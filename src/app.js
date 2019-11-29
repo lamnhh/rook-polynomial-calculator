@@ -4,7 +4,7 @@ import MathJax from "react-mathjax2";
 import compute from "./calculator";
 import SizeSelector from "./size-selector";
 
-const SIZE_LIMIT = 7;
+const SIZE_LIMIT = 8;
 
 const App = () => {
   const [rowCount, setRowCount] = useState(4);
