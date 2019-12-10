@@ -52,18 +52,11 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <h1 className="page-title">Rook Polynomial Calculator</h1>
       <div className="chessboard-container">
         <div className="chessboard-size-form">
-          <SizeSelector
-            upperLimit={SIZE_LIMIT}
-            value={rowCount}
-            onSelect={setRowCount}></SizeSelector>
+          <SizeSelector upperLimit={SIZE_LIMIT} value={rowCount} onSelect={setRowCount} />
           <img src="/times.svg" alt="" />
-          <SizeSelector
-            upperLimit={SIZE_LIMIT}
-            value={colCount}
-            onSelect={setColCount}></SizeSelector>
+          <SizeSelector upperLimit={SIZE_LIMIT} value={colCount} onSelect={setColCount} />
         </div>
         <div
           className="chessboard"
